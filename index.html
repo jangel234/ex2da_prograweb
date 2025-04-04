@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Charlas</title>
+    <link href="./css/styles.css" rel="stylesheet">
+    <script src="./js/app.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="../js/applistado.js"></script> -->
+</head>
+
+<body class="bg-light" cz-shortcut-listen="true">
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-first mx-3">
+                <div class="logo_udec my-3">
+                    <img class="logoimg" src="./imgs/image.png">
+                </div>
+                <div class="my-4 mx-2">
+                    <h1 class="sistema">Sistema de Charlas</h1>
+                    <h2 class="facultad">Facultad de Telemática</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="navbar navbar-expand-lg navbar-dark header_sistema">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html"><i class="fas fas-eye"></i>SICHARLAS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <nav class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active">Listado</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./new.html">Nuevo alumno</a>
+                    </li>
+                </nav>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <center id="pTabla">
+
+                    </center>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        fetch('http://148.213.3.154/proyecto/estudiantes/api/v1/alumnos')
+            .then(response => response.json())
+            .then(data => {
+                let datosTabla = data;
+                let nombre = 'Angel' //;prompt('ingresa tu nombre', 'Default');
+                if (nombre === 'Angel') {
+                    const div = document.getElementById('pTabla');
+                    createTable(div, datosTabla.data);
+
+                } else {
+                    const div = document.getElementById('pTabla');
+                    const vacio = this.document.createElement('a');
+                    const img = this.document.createElement('img');
+                    img.src = "./imgs/bola-amarilla.jpg";
+                    img.style.width = "180px";
+                    img.style.height = "180px";
+                    vacio.style.fontSize = "40px";
+                    vacio.className = "text-danger";
+                    vacio.style.textDecoration = "none";
+                    vacio.text = "No tienes permiso para entrar";
+                    div.appendChild(vacio);
+                    div.appendChild(img);
+                }
+
+            })
+            .catch(error => console.error('Error:', error));
+
+
+
+        function createTable(div, datosTabla) {
+            const table = this.document.createElement('table');
+            const headT = this.document.createElement('thead');
+            const headTR = this.document.createElement('tr');
+
+            const idTH = this.document.createElement('th');
+            const nameTH = this.document.createElement('th');
+            const acountTH = this.document.createElement('th');
+            const charlaTH = this.document.createElement('th');
+            const placesTH = this.document.createElement('th');
+            const dateTH = this.document.createElement('th');
+            const actTH = this.document.createElement('th');
+
+            const bodyT = this.document.createElement('tbody');
+
+            let id = document.createTextNode("ID");
+            let name = document.createTextNode("Nombre");
+            let acount = document.createTextNode("Cuenta");
+            let talks = document.createTextNode("Charla");
+            let places = document.createTextNode("Cupo");
+            let date = document.createTextNode("Fecha de creado");
+            let act = document.createTextNode("Modificar / Borrar");
+
+            table.className += "table table-hover";
+
+            table.appendChild(headT);
+            headT.appendChild(headTR);
+
+            idTH.appendChild(id);
+            nameTH.appendChild(name);
+            acountTH.appendChild(acount);
+            charlaTH.appendChild(talks);
+            placesTH.appendChild(places);
+            dateTH.appendChild(date);
+            actTH.appendChild(act);
+
+            headTR.appendChild(idTH);
+            headTR.appendChild(nameTH);
+            headTR.appendChild(acountTH);
+            headTR.appendChild(charlaTH);
+            headTR.appendChild(placesTH);
+            headTR.appendChild(dateTH);
+            headTR.appendChild(actTH);
+
+            datosTabla.forEach(element => {
+                const elementTR = this.document.createElement('tr');
+                const idTD = this.document.createElement('td');
+                const nameTD = this.document.createElement('td');
+                const acountTD = this.document.createElement('td');
+                const talksTD = this.document.createElement('td');
+                const placesTD = this.document.createElement('td');
+                const dateTD = this.document.createElement('td');
+                const actTD = this.document.createElement('td');
+
+                let id = document.createTextNode(element.id_alumno);
+                let name = document.createTextNode(element.nombre);
+                let acount = document.createTextNode(element.no_cuenta);
+                let talks = document.createTextNode(element.charla);
+                let places = document.createTextNode(element.cupo);
+                let date = document.createTextNode(element.fecha_creado);
+                let act1 = document.createElement('img');
+                let act2 = document.createElement('img');
+                act1.src = "./imgs/modificar.png";
+                act2.src = "./imgs/borrar.png";
+                act1.style.height = '20px';
+                act1.style.width = '20px';
+                act2.style.marginLeft = '40px';
+                act2.style.height = '20px';
+                act2.style.width = '20px';
+
+                act2.dataset.id = element.id_alumno;
+                act2.addEventListener('click', (event) => {
+                    const id = event.target.dataset.id;
+                    if (confirm('¿Estás seguro de eliminar este alumno?')) {
+                        fetch('http://148.213.3.154/proyecto/estudiantes/api/v1/alumno/' + id, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    const row = event.target.closest('tr');
+                                    row.remove();
+                                    alert('Alumno eliminado correctamente');
+                                } else {
+                                    throw new Error('Error al eliminar');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('No se pudo eliminar el alumno');
+                            });
+                    }
+                });
+
+
+                idTD.appendChild(id);
+                nameTD.appendChild(name);
+                acountTD.appendChild(acount);
+                talksTD.appendChild(talks);
+                placesTD.appendChild(places);
+                dateTD.appendChild(date);
+                actTD.appendChild(act1);
+                actTD.appendChild(act2);
+
+                elementTR.appendChild(idTD);
+                elementTR.appendChild(nameTD);
+                elementTR.appendChild(acountTD);
+                elementTR.appendChild(talksTD);
+                elementTR.appendChild(placesTD);
+                elementTR.appendChild(dateTD);
+                elementTR.appendChild(actTD);
+
+                bodyT.appendChild(elementTR);
+            });
+            table.appendChild(bodyT);
+            div.appendChild(table);
+
+        }
+    </script>
+</body>
+
+</html>

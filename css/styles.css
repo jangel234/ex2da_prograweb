@@ -1,0 +1,24 @@
+.logoimg {
+    width: 80px !important;
+    height: 80px !important;
+}
+.sistema {
+    color: #7C7C7B;
+    font-size: large;
+}
+.facultad {
+    color: #7C7C7B;
+    font-size: small;
+}
+.navbar {
+    background-color: #A3BC56;
+    color: aliceblue;
+}
+.navbar-gray {
+    background-color: #6d6d6d;
+    color: aliceblue;
+    height: 14%;
+}
+center {
+    margin-top: 35px;
+}
